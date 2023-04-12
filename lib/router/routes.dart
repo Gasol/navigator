@@ -1,49 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../constants.dart';
+import '../login_state.dart';
 import '../ui/create_account.dart';
+import '../ui/details.dart';
 import '../ui/error_page.dart';
 import '../ui/home_screen.dart';
+import '../ui/login.dart';
 import '../ui/more_info.dart';
 import '../ui/payment.dart';
 import '../ui/personal_info.dart';
 import '../ui/signin_info.dart';
-import '../constants.dart';
-import '../login_state.dart';
-import '../ui/login.dart';
-import '../ui/details.dart';
 
 class MyRouter {
   final LoginState loginState;
 
   MyRouter(this.loginState);
 
-  late final router = GoRouter(
+  late final GoRouter router = GoRouter(
     refreshListenable: loginState,
     debugLogDiagnostics: true,
-    urlPathStrategy: UrlPathStrategy.path,
+    initialLocation: '/',
     routes: [
       GoRoute(
+        name: rootRouteName,
         path: '/',
-        redirect: (state) =>
-            state.namedLocation(homeRouteName, params: {'tab': 'shop'}),
+        redirect: (context, _) =>
+            router.namedLocation(homeRouteName, params: {'tab': 'shop'}),
       ),
-/*
-      GoRoute(
-        path: '/shop',
-        redirect: (state) =>
-            state.namedLocation(homeRouteName, params: {'tab': 'shop'}),
-      ),
-      GoRoute(
-        path: '/cart',
-        redirect: (state) =>
-            state.namedLocation(homeRouteName, params: {'tab': 'cart'}),
-      ),
-      GoRoute(
-        path: '/profile',
-        redirect: (state) =>
-            state.namedLocation(homeRouteName, params: {'tab': 'profile'}),
-      ),
-*/
       GoRoute(
         name: loginRouteName,
         path: '/login',
@@ -118,7 +104,7 @@ class MyRouter {
       GoRoute(
         name: detailsRouteName,
         path: '/details-redirector/:item',
-        redirect: (state) => state.namedLocation(
+        redirect: (context, state) => router.namedLocation(
           subDetailsRouteName,
           params: {'tab': 'shop', 'item': state.params['item']!},
         ),
@@ -126,7 +112,7 @@ class MyRouter {
       GoRoute(
         name: personalRouteName,
         path: '/profile-personal',
-        redirect: (state) => state.namedLocation(
+        redirect: (context, _) => router.namedLocation(
           profilePersonalRouteName,
           params: {'tab': 'profile'},
         ),
@@ -134,7 +120,7 @@ class MyRouter {
       GoRoute(
         name: paymentRouteName,
         path: '/profile-payment',
-        redirect: (state) => state.namedLocation(
+        redirect: (context, _) => router.namedLocation(
           profilePaymentRouteName,
           params: {'tab': 'profile'},
         ),
@@ -142,7 +128,7 @@ class MyRouter {
       GoRoute(
         name: signinInfoRouteName,
         path: '/profile-signin-info',
-        redirect: (state) => state.namedLocation(
+        redirect: (context, _) => router.namedLocation(
           profileSigninInfoRouteName,
           params: {'tab': 'profile'},
         ),
@@ -150,7 +136,7 @@ class MyRouter {
       GoRoute(
         name: moreInfoRouteName,
         path: '/profile-more-info',
-        redirect: (state) => state.namedLocation(
+        redirect: (context, _) => router.namedLocation(
           profileMoreInfoRouteName,
           params: {'tab': 'profile'},
         ),
@@ -163,17 +149,21 @@ class MyRouter {
     ),
 
     // redirect to the login page if the user is not logged in
-    redirect: (state) {
-      final loginLoc = state.namedLocation(loginRouteName);
+    redirect: (context, state) {
+      final loginLoc = router.namedLocation(loginRouteName);
       final loggingIn = state.subloc == loginLoc;
-      final createAccountLoc = state.namedLocation(createAccountRouteName);
+      final createAccountLoc = router.namedLocation(createAccountRouteName);
       final creatingAccount = state.subloc == createAccountLoc;
+      final loginState = context.read<LoginState>();
       final loggedIn = loginState.loggedIn;
-      final homeLoc = state.namedLocation(homeRouteName);
 
-      if (!loggedIn && !loggingIn && !creatingAccount) return loginLoc;
-      if (loggedIn && (loggingIn || creatingAccount)) return homeLoc;
-      return null;
+      String? returnLoc = null;
+      if (!loggedIn && !loggingIn && !creatingAccount) {
+        returnLoc = loginLoc;
+      } else if (loggedIn && (loggingIn || creatingAccount)) {
+        returnLoc = router.namedLocation(rootRouteName);
+      }
+      return returnLoc;
     },
   );
 }

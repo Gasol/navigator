@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'cart_holder.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import 'cart_holder.dart';
 import 'login_state.dart';
 import 'router/routes.dart';
 
@@ -27,10 +27,7 @@ class MyApp extends StatelessWidget {
           lazy: false,
           create: (_) => CartHolder(),
         ),
-        ChangeNotifierProvider<LoginState>(
-          lazy: false,
-          create: (BuildContext createContext) => loginState,
-        ),
+        ChangeNotifierProvider.value(value: loginState),
         Provider<MyRouter>(
           lazy: false,
           create: (BuildContext createContext) => MyRouter(loginState),
@@ -38,10 +35,8 @@ class MyApp extends StatelessWidget {
       ],
       child: Builder(
         builder: (BuildContext context) {
-          final router = Provider.of<MyRouter>(context, listen: false).router;
           return MaterialApp.router(
-            routeInformationParser: router.routeInformationParser,
-            routerDelegate: router.routerDelegate,
+            routerConfig: context.read<MyRouter>().router,
             debugShowCheckedModeBanner: false,
             title: 'Navigation App',
             theme: ThemeData(

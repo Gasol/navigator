@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../login_state.dart';
@@ -87,9 +87,8 @@ class _LoginState extends State<Login> {
                             ),
                           ),
                         ),
-                        onPressed: () => {
-                           context.goNamed(createAccountRouteName)
-                        },
+                        onPressed: () =>
+                            context.pushNamed(createAccountRouteName),
                         child: const Text(
                           'Create Account',
                           style: TextStyle(color: Colors.white),
@@ -131,6 +130,6 @@ class _LoginState extends State<Login> {
   }
 
   void saveLoginState(BuildContext context) {
-    Provider.of<LoginState>(context, listen: false).loggedIn = true;
+    context.read<LoginState>().loggedIn = true;
   }
 }

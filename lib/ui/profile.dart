@@ -75,8 +75,7 @@ class _ProfileState extends State<Profile> {
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               onTap: () {
-                context
-                    .goNamed(signinInfoRouteName);
+                context.goNamed(signinInfoRouteName);
               },
             ),
           ),

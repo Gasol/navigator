@@ -2,6 +2,7 @@ const String cartRouteName = 'cart';
 const String createAccountRouteName = 'create-account';
 const String detailsRouteName = 'details';
 const String homeRouteName = 'home';
+const String rootRouteName = 'root';
 const String loggedInKey = 'LoggedIn';
 const String loginRouteName = 'login';
 const String moreInfoRouteName = 'moreInfo';

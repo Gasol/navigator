@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: (index) {
           setState(() {
             _selectedIndex = index;
- /*           switch (index) {
+            /*           switch (index) {
               case 0:
                 context.go('/shop');
                 // context.go('/root/shop');
@@ -79,7 +79,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 // context.go('/root/profile');
                 break;
             }
-*/          });
+*/
+          });
         },
       ),
       body: IndexedStack(
