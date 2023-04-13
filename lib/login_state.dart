@@ -8,7 +8,7 @@ class LoginState extends ChangeNotifier {
   bool _loggedIn = false;
 
   LoginState(this.prefs) {
-    loggedIn = prefs.getBool(loggedInKey) ?? false;
+    checkLoggedIn();
   }
 
   bool get loggedIn => _loggedIn;
