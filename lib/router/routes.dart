@@ -157,7 +157,7 @@ class MyRouter {
       final loginState = LoginScope.of(context);
       final loggedIn = loginState.loggedIn;
 
-      String? returnLoc = null;
+      String? returnLoc;
       if (!loggedIn && !loggingIn && !creatingAccount) {
         returnLoc = loginLoc;
       } else if (loggedIn && (loggingIn || creatingAccount)) {

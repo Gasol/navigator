@@ -7,7 +7,7 @@ class SigninInfo extends StatefulWidget {
   const SigninInfo({Key? key}) : super(key: key);
 
   @override
-  _SigninInfoState createState() => _SigninInfoState();
+  State<SigninInfo> createState() => _SigninInfoState();
 }
 
 class _SigninInfoState extends State<SigninInfo> {

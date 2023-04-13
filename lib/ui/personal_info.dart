@@ -4,7 +4,7 @@ class PersonalInfo extends StatefulWidget {
   const PersonalInfo({Key? key}) : super(key: key);
 
   @override
-  _PersonalInfoState createState() => _PersonalInfoState();
+  State<PersonalInfo> createState() => _PersonalInfoState();
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {

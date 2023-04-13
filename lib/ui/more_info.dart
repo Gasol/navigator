@@ -4,7 +4,7 @@ class MoreInfo extends StatefulWidget {
   const MoreInfo({Key? key}) : super(key: key);
 
   @override
-  _MoreInfoState createState() => _MoreInfoState();
+  State<MoreInfo> createState() => _MoreInfoState();
 }
 
 class _MoreInfoState extends State<MoreInfo> {
