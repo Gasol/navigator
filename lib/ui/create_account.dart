@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../login_state.dart';
@@ -131,6 +130,6 @@ class _CreateAccountState extends State<CreateAccount> {
   }
 
   void saveLoginState(BuildContext context) {
-    Provider.of<LoginState>(context, listen: false).loggedIn = true;
+    LoginScope.of(context).loggedIn = true;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 
 import '../constants.dart';
 import '../login_state.dart';
@@ -20,15 +19,16 @@ class MyRouter {
   MyRouter(this.loginState);
 
   late final GoRouter router = GoRouter(
-    refreshListenable: loginState,
     debugLogDiagnostics: true,
     initialLocation: '/',
     routes: [
       GoRoute(
         name: rootRouteName,
         path: '/',
-        redirect: (context, _) =>
-            router.namedLocation(homeRouteName, params: {'tab': 'shop'}),
+        redirect: (context, _) => router.namedLocation(
+          homeRouteName,
+          params: {'tab': 'shop'},
+        ),
       ),
       GoRoute(
         name: loginRouteName,
@@ -154,7 +154,7 @@ class MyRouter {
       final loggingIn = state.subloc == loginLoc;
       final createAccountLoc = router.namedLocation(createAccountRouteName);
       final creatingAccount = state.subloc == createAccountLoc;
-      final loginState = context.read<LoginState>();
+      final loginState = LoginScope.of(context);
       final loggedIn = loginState.loggedIn;
 
       String? returnLoc = null;

@@ -21,3 +21,14 @@ class LoginState extends ChangeNotifier {
     loggedIn = prefs.getBool(loggedInKey) ?? false;
   }
 }
+
+class LoginScope extends InheritedNotifier<LoginState> {
+  const LoginScope({
+    required LoginState super.notifier,
+    required super.child,
+    super.key,
+  });
+
+  static LoginState of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<LoginScope>()!.notifier!;
+}

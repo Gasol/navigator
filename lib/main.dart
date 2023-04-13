@@ -21,30 +21,31 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<CartHolder>(
-          lazy: false,
-          create: (_) => CartHolder(),
-        ),
-        ChangeNotifierProvider.value(value: loginState),
-        Provider<MyRouter>(
-          lazy: false,
-          create: (BuildContext createContext) => MyRouter(loginState),
-        ),
-      ],
-      child: Builder(
-        builder: (BuildContext context) {
-          return MaterialApp.router(
-            routerConfig: context.read<MyRouter>().router,
-            debugShowCheckedModeBanner: false,
-            title: 'Navigation App',
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
+    return LoginScope(
+        notifier: loginState,
+        child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CartHolder>(
+              lazy: false,
+              create: (_) => CartHolder(),
             ),
-          );
-        },
-      ),
-    );
+            Provider<MyRouter>(
+              lazy: false,
+              create: (BuildContext createContext) => MyRouter(loginState),
+            ),
+          ],
+          child: Builder(
+            builder: (BuildContext context) {
+              return MaterialApp.router(
+                routerConfig: context.read<MyRouter>().router,
+                debugShowCheckedModeBanner: false,
+                title: 'Navigation App',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+              );
+            },
+          ),
+        ));
   }
 }
